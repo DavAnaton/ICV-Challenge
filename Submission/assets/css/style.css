@@ -20,3 +20,31 @@
 .tile.selected{
 	background-color: #333333;
 }
+.tile.start:after{
+	content: "Start";
+	font-size: 8px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+#sidebar{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 100vh;
+	background-color: #99eded;
+}
+#sidebar .button{
+	width: 100%;
+	height: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 30px;
+}
+#sidebar .button:hover{
+	background-color: #88dcdc;
+}
+#sidebar .button.active{
+	background-color: #77cbcb;
+}

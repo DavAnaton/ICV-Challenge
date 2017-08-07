@@ -7,9 +7,14 @@
 	<title>ICV shortest path app</title>
 </head>
 <body ng-app="PathFinder">
+
+	<div id="sidebar" ng-controller="SidebarController">
+		<div class="button" ng-click="start()" ng-class="{active: startClicked}">Start</div>
+	</div>
+
 	<div id="board" ng-controller="BoardController">
 		<div ng-repeat="i in size * size | range" 
-			class="tile" ng-class="{selected: tiles[$index].selected}"
+			class="tile" ng-class="{selected: tiles[$index].selected, start:($index==startIndex)}"
 			ng-click="tileClicked($index)">
 		</div>
 	</div>
@@ -19,5 +24,6 @@
 	<script type="text/javascript" src="./assets/js/app.js"></script>
 	<script type="text/javascript" src="./assets/js/filters/filters.js"></script>
 	<script type="text/javascript" src="./assets/js/controllers/boardController.js"></script>
+	<script type="text/javascript" src="./assets/js/controllers/sidebarController.js"></script>
 </body>
 </html>
