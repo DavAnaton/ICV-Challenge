@@ -27,6 +27,13 @@
 	bottom: 0;
 	right: 0;
 }
+.tile.end:after{
+	content: "End";
+	font-size: 8px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
 #sidebar{
 	position: fixed;
 	top: 0;

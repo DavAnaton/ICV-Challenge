@@ -9,12 +9,13 @@
 <body ng-app="PathFinder">
 
 	<div id="sidebar" ng-controller="SidebarController">
-		<div class="button" ng-click="start()" ng-class="{active: startClicked}">Start</div>
+		<div class="button" ng-click="start()" ng-class="{active: clicked=='start'}">Start</div>
+		<div class="button" ng-click="end()" ng-class="{active: clicked=='end'}">End</div>
 	</div>
 
 	<div id="board" ng-controller="BoardController">
 		<div ng-repeat="i in size * size | range" 
-			class="tile" ng-class="{selected: tiles[$index].selected, start:($index==startIndex)}"
+			class="tile" ng-class="{selected: tiles[$index].selected, start:($index==startIndex), end:($index==endIndex)}"
 			ng-click="tileClicked($index)">
 		</div>
 	</div>

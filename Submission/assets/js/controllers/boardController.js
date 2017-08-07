@@ -6,6 +6,7 @@ function BoardController($scope){
     $scope.tiles = []; // Array of tiles
 
     $scope.startIndex = null; // The starting point
+    $scope.endIndex = null; // The ending point
 
     // Sets all the tiles to their default state
     $scope.resetTiles = function(){
@@ -14,6 +15,7 @@ function BoardController($scope){
             $scope.tiles.push({selected: false});
         }
         $scope.startIndex = null;
+        $scope.endIndex = null;
     }
     $scope.resetTiles();
 
@@ -21,7 +23,7 @@ function BoardController($scope){
     var tileFunctions = {
         // Changes the color of the tile
         default: function(index){
-            if(index!=$scope.startIndex){
+            if(index!=$scope.startIndex && index!=$scope.endIndex){
                 $scope.tiles[index].selected = !$scope.tiles[index].selected; 
             }
         },
@@ -32,11 +34,23 @@ function BoardController($scope){
             $scope.changeClickTo('default');
             
             var $sidebarScope = angular.element(document.querySelector('[ng-controller = "SidebarController"]')).scope();
-            $sidebarScope.startClicked = false;
+            $sidebarScope.clicked = null;
+        },
+        // Selects the ending point
+        end: function(index){
+            $scope.endIndex = index;
+            $scope.tiles[index].selected = false;
+            $scope.changeClickTo('default');
+            
+            var $sidebarScope = angular.element(document.querySelector('[ng-controller = "SidebarController"]')).scope();
+            $sidebarScope.clicked = null;
         }
     }
     // Changes the behaviour of a click on a tile
     $scope.changeClickTo = function(newValue){
+        if(!newValue){
+            newValue = 'default';
+        }
         $scope.tileClicked = tileFunctions[newValue];
     }
 
