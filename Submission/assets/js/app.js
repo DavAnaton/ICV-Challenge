@@ -1,0 +1,1 @@
+var pathFinder = angular.module('PathFinder', []);

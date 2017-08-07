@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/materialize.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+	<title>ICV shortest path app</title>
+</head>
+<body ng-app="PathFinder">
+	<div id="board" ng-controller="BoardController">
+		<div ng-repeat="i in size * size | range" 
+			class="tile">
+		</div>
+	</div>
+
+	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
+	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
+	<script type="text/javascript" src="./assets/js/app.js"></script>
+	<script type="text/javascript" src="./assets/js/filters/filters.js"></script>
+	<script type="text/javascript" src="./assets/js/controllers/boardController.js"></script>
+</body>
+</html>
