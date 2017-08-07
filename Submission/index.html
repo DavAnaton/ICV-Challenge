@@ -9,7 +9,8 @@
 <body ng-app="PathFinder">
 	<div id="board" ng-controller="BoardController">
 		<div ng-repeat="i in size * size | range" 
-			class="tile">
+			class="tile" ng-class="{selected: tiles[$index].selected}"
+			ng-click="tileClicked($index)">
 		</div>
 	</div>
 
