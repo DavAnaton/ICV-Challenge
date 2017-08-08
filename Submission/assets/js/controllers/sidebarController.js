@@ -16,4 +16,13 @@ function SidebarController($scope){
         $scope.clicked = ($scope.clicked=='end') ? null : 'end';
         $boardScope.$$childTail.changeClickTo($scope.clicked);
     }
+    // Go button is pressed: BFS is running
+    $scope.go = function(){
+        $scope.clicked = ($scope.clicked=='go') ? null : 'go';
+        $boardScope.$$childTail.findPath();
+    }
+    // Fill Board button is pressed: Test board is loaded
+    $scope.test = function(){
+        $boardScope.$$childTail.fillTest();
+    }
 };
