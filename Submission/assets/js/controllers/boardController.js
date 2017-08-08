@@ -1,7 +1,7 @@
 angular.module("PathFinder")
 .controller('BoardController', BoardController);
 
-function BoardController($scope, $interval){
+function BoardController($scope, $interval, $timeout, $window){
     $scope.size = 12; // Size of the board
     $scope.tiles = []; // Array of tiles
 
@@ -69,7 +69,10 @@ function BoardController($scope, $interval){
     }
 
     // Runs BFS and find the best path
-    $scope.findPath = function(){
+    $scope.BFS = function(){
+        var startTime = new Date();
+        $scope.steps = 0;
+        $scope.tileClicked = ()=>{};
         var current = null;
         var queue = [];
 
@@ -77,14 +80,19 @@ function BoardController($scope, $interval){
 
         while(queue.length > 0){
             current = queue.shift();
+            if(current==$scope.endIndex){
+                break;
+            }
             var neighbors = BFSfunctions.getNeighbors(current).filter(BFSfunctions.filterNeighbors);
             for(i in neighbors){
                 $scope.tiles[neighbors[i]].visited = true;
                 $scope.tiles[neighbors[i]].parent = current;
             }
             queue = queue.concat(neighbors);
+            $scope.steps = $scope.steps + 1;
         }
         $scope.setPath(BFSfunctions.readPath());
+        $scope.runtime = new Date() - startTime;
     }
 
     // Useful function for the BFS
@@ -140,6 +148,11 @@ function BoardController($scope, $interval){
         var interval = $interval(function(){
             if(i == path.length){
                 $interval.cancel(interval);
+                $timeout(function() {
+                    var url = window.location.href.replace('index', 'results');
+                    url += "?steps=" + $scope.steps + "&time=" + $scope.runtime;
+                    window.location.href = url;
+                }, 1000);
             }else{
                 $scope.path.push(path[i]);
                 i++;

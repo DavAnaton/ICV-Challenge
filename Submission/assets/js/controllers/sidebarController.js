@@ -19,7 +19,7 @@ function SidebarController($scope){
     // Go button is pressed: BFS is running
     $scope.go = function(){
         $scope.clicked = ($scope.clicked=='go') ? null : 'go';
-        $boardScope.$$childTail.findPath();
+        $boardScope.$$childTail.BFS();
     }
     // Fill Board button is pressed: Test board is loaded
     $scope.test = function(){

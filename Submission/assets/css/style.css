@@ -58,3 +58,51 @@
 #sidebar .button.active{
 	background-color: #77cbcb;
 }
+
+#resultsWrapper{
+	position: absolute;
+	top: 50vh;
+	left: 50vw;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+#startOverButton{
+	background-color: #cccccc;
+	position: relative;
+	height:30px;
+	width: 150px;
+	left: 50%;
+	transform: translate(-50%);
+	line-height: 30px;
+	border-left: 7px solid green;
+}
+#startOverButton a{
+	text-decoration: none !important;
+	color: white;
+	font-weight: bold;
+}
+#vsign{
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	background-color: green;
+	border-radius: 10px;
+	left: 10px;
+	top: 5px;
+}
+#vsign img{
+	position: absolute; 
+	height: 10px;
+	top: 5px;
+	left: 4px;
+}
+#startOver{
+	position: relative;
+	left: 15px;
+}
+#startOverButton:hover{
+	background-color: #333333;
+}
+#startOverButton:hover #vsign{
+	background-color: red;
+}z

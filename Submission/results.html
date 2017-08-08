@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/materialize.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+	<title>ICV shortest path app</title>
+</head>
+<body ng-app="PathFinder">
+
+	<div ng-controller="ResultsController" id="resultsWrapper">
+		Job ended successfully with
+		<ng-pluralize count="steps" when="{
+				'0': 'no step', 
+				'one': '1 step', 
+				'other': '{} steps'
+		}"></ng-pluralize>,
+		and in {{time}} ms.<br/>
+		<div id="startOverButton">
+			<a href="index.html">
+				<span id="vsign"><img src="./assets/img/VSign.png"></span>
+				<span id="startOver">Start Over</span>
+			</a>
+		</div>
+	</div>
+
+	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
+	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
+	<script type="text/javascript" src="./assets/js/app.js"></script>
+	<script type="text/javascript" src="./assets/js/controllers/resultsController.js"></script>
+</body>
+</html>

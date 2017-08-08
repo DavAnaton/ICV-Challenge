@@ -12,7 +12,7 @@
 		<div class="button" ng-click="start()" ng-class="{active: clicked=='start'}">Start</div>
 		<div class="button" ng-click="end()" ng-class="{active: clicked=='end'}">End</div>
 		<div class="button" ng-click="go()" ng-class="{active: clicked=='go'}">Go</div>
-		<!-- <div class="button" ng-click="test()">Fill board</div> -->
+		<div class="button" ng-click="test()">Fill board</div>
 	</div>
 
 	<div id="board" ng-controller="BoardController">
@@ -20,6 +20,7 @@
 			class="tile" ng-class="{selected: tiles[$index].selected, start:($index==startIndex), end:($index==endIndex), path:path.indexOf($index)!=-1}"
 			ng-click="tileClicked($index)">
 		</div>
+		<div style="position: absolute;top:-30px">{{steps}}</div>
 	</div>
 
 	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
