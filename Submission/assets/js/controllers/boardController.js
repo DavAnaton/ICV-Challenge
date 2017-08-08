@@ -1,7 +1,7 @@
 angular.module("PathFinder")
 .controller('BoardController', BoardController);
 
-function BoardController($scope){
+function BoardController($scope, $interval){
     $scope.size = 12; // Size of the board
     $scope.tiles = []; // Array of tiles
 
@@ -84,7 +84,7 @@ function BoardController($scope){
             }
             queue = queue.concat(neighbors);
         }
-        $scope.path = BFSfunctions.readPath();
+        $scope.setPath(BFSfunctions.readPath());
     }
 
     // Useful function for the BFS
@@ -133,5 +133,17 @@ function BoardController($scope){
             }
             return path;
         }
+    }
+
+    $scope.setPath = function(path){
+        var i = 0;
+        var interval = $interval(function(){
+            if(i == path.length){
+                $interval.cancel(interval);
+            }else{
+                $scope.path.push(path[i]);
+                i++;
+            }
+        }, 100)
     }
 };
