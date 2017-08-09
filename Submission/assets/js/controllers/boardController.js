@@ -1,13 +1,14 @@
 angular.module("PathFinder")
 .controller('BoardController', BoardController);
 
-function BoardController($scope, $interval, $timeout, $window){
+function BoardController($scope, $interval, $timeout, $window, Colors){
     $scope.size = 12; // Size of the board
     $scope.tiles = []; // Array of tiles
 
     $scope.startIndex = null; // The starting point
     $scope.endIndex = null; // The ending point
     $scope.path = [];
+    $scope.colors = Colors.getColors();
 
     // Sets all the tiles to their default state
     $scope.resetTiles = function(){
@@ -158,5 +159,17 @@ function BoardController($scope, $interval, $timeout, $window){
                 i++;
             }
         }, 100)
+    }
+
+    $scope.getColorFor = function(index){
+        var color = "#";
+        if($scope.path.indexOf(index)!=-1){
+            color+=$scope.colors.C;
+        }else if($scope.tiles[index].selected){
+            color+=$scope.colors.B;
+        }else{
+            color+=$scope.colors.A;
+        }
+        return color;
     }
 };

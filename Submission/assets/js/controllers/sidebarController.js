@@ -1,8 +1,10 @@
 angular.module("PathFinder")
 .controller('SidebarController', SidebarController);
 
-function SidebarController($scope){
+function SidebarController($scope, Colors){
     $scope.clicked = null;
+    $scope.settingVisible = false;
+    $scope.colors = Colors.getColors();
 
     var $boardScope = angular.element(document.querySelector('[ng-controller = "BoardController"]')).scope();
 
@@ -24,5 +26,13 @@ function SidebarController($scope){
     // Fill Board button is pressed: Test board is loaded
     $scope.test = function(){
         $boardScope.$$childTail.fillTest();
+    }
+    // Hides / Shows the settings
+    $scope.toggleSettings = function(){
+        $scope.settingVisible = !$scope.settingVisible;
+    }
+    // Send the color to the board controller
+    $scope.updateColors = function(){
+        Colors.setColors($scope.colors);
     }
 };

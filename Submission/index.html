@@ -13,20 +13,28 @@
 		<div class="button" ng-click="end()" ng-class="{active: clicked=='end'}">End</div>
 		<div class="button" ng-click="go()" ng-class="{active: clicked=='go'}">Go</div>
 		<div class="button" ng-click="test()">Fill board</div>
+		<div class="button" ng-click="toggleSettings()" ng-class="{active: clicked=='settings'}">Settings</div>
+		<form ng-show="settingVisible" ng-cloak>
+			<div class="formLine"><label for="A">A:</label><input type="text" ng-model="colors.A" name="A"></div>
+			<div class="formLine"><label for="B">B:</label><input type="text" ng-model="colors.B" name="B"></div>
+			<div class="formLine"><label for="C">C:</label><input type="text" ng-model="colors.C" name="C"></div>
+		</form>
 	</div>
 
 	<div id="board" ng-controller="BoardController">
 		<div ng-repeat="i in size * size | range" 
-			class="tile" ng-class="{selected: tiles[$index].selected, start:($index==startIndex), end:($index==endIndex), path:path.indexOf($index)!=-1}"
-			ng-click="tileClicked($index)">
+			class="tile" ng-class="{start:($index==startIndex), end:($index==endIndex)}"
+			ng-click="tileClicked($index)"
+			ng-style="{'background-color': getColorFor($index)}">
 		</div>
-		<div style="position: absolute;top:-30px">{{steps}}</div>
 	</div>
+
 
 	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
 	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
 	<script type="text/javascript" src="./assets/js/app.js"></script>
 	<script type="text/javascript" src="./assets/js/filters/filters.js"></script>
+	<script type="text/javascript" src="./assets/js/services/colorService.js"></script>
 	<script type="text/javascript" src="./assets/js/controllers/boardController.js"></script>
 	<script type="text/javascript" src="./assets/js/controllers/sidebarController.js"></script>
 </body>
