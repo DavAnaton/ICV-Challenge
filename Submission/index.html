@@ -7,23 +7,25 @@
 	<title>ICV shortest path app</title>
 </head>
 <body ng-app="PathFinder">
-
+	<div ng-controller="MessagesController" id="messages" ng-cloak>
+		<div class="message" ng-repeat="message in messages" ng-class="message.type">{{message.text}}<span class="close" ng-click="close(message)">X</span></div>
+	</div>
 	<div id="sidebar" ng-controller="SidebarController">
 		<div class="button" ng-click="start()" ng-class="{active: clicked=='start'}">Start</div>
 		<div class="button" ng-click="end()" ng-class="{active: clicked=='end'}">End</div>
 		<div class="button" ng-click="go()" ng-class="{active: clicked=='go'}">Go</div>
-		<div class="button" ng-click="test()">Fill board</div>
+		<div class="button" ng-click="test()" ng-show="advanced" ng-cloak>Fill board</div>
+		<div class="button" ng-click="reset()" ng-show="advanced" ng-cloak>Reset board</div>
 		<div class="button" ng-click="toggleSettings()" ng-class="{active: clicked=='settings'}">Settings</div>
-		<form ng-show="settingVisible" ng-cloak>
-			<div class="formLine"><label for="A">A:</label><input type="text" ng-model="colors.A" name="A"></div>
-			<div class="formLine"><label for="B">B:</label><input type="text" ng-model="colors.B" name="B"></div>
-			<div class="formLine"><label for="C">C:</label><input type="text" ng-model="colors.C" name="C"></div>
+		<form ng-show="clicked=='settings'" ng-cloak>
+			<div class="formLine" ng-repeat="(key, value) in colors"><label for="color{{key}}">{{key}}:</label><input type="text" ng-model="colors[key]" id="color{{key}}"></div>
+			<div class="button" ng-click="advancedMode()">Advanced Mode</div>
 		</form>
 	</div>
 
-	<div id="board" ng-controller="BoardController">
+	<div id="board" ng-controller="BoardController" ng-cloak>
 		<div ng-repeat="i in size * size | range" 
-			class="tile" ng-class="{start:($index==startIndex), end:($index==endIndex)}"
+			class="tile" ng-class="{start:($index==points.start), end:($index==points.end)}"
 			ng-click="tileClicked($index)"
 			ng-style="{'background-color': getColorFor($index)}">
 		</div>
@@ -32,10 +34,9 @@
 
 	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
 	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
-	<script type="text/javascript" src="./assets/js/app.js"></script>
-	<script type="text/javascript" src="./assets/js/filters/filters.js"></script>
-	<script type="text/javascript" src="./assets/js/services/colorService.js"></script>
-	<script type="text/javascript" src="./assets/js/controllers/boardController.js"></script>
-	<script type="text/javascript" src="./assets/js/controllers/sidebarController.js"></script>
+	<script type="text/javascript" src="./assets/js/app/app.js"></script>
+	<script type="text/javascript" src="./assets/js/app/filters.js"></script>
+	<script type="text/javascript" src="./assets/js/app/services.js"></script>
+	<script type="text/javascript" src="./assets/js/app/controllers/indexControllers.js"></script>
 </body>
 </html>

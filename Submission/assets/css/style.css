@@ -9,6 +9,7 @@
 	top: 50vh;
 	left: 50vw;
 	transform: translate(-50%, -50%);
+	border-collapse: collapse;
 }
 .tile{
 	height: calc(100% / 12);
@@ -54,7 +55,41 @@
 #sidebar .button.active{
 	background-color: #77cbcb;
 }
+#messages{
+	position: absolute;
+	width: calc(100% - 150px);
+	top: 0px;
+	left: 150px;
+}
+#messages .message{
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	padding-left: 20px;
+	color: white;
+}
+#messages .message.error{
+	background-color:  #FF3E2B;
+}
+#messages .message.success{
+	background-color: #73D642;
+}
+#messages .message.info{
+	background-color: #576CCF;
+}
+#messages .message.warning{
+	background-color: #FFB500;
+}
+#messages .message .close{
+	cursor: pointer;
+	position: absolute;
+	font-size: 20px;
+	font-weight: bolder;
+	right: 20px;
+}
 
+
+/*********************************/
 #resultsWrapper{
 	position: absolute;
 	top: 50vh;
@@ -110,6 +145,6 @@
 .formLine label{
 	width: 10%;
 }
-.formLine input{
+.formLine input[type="text"]{
 	width: 80%;
 }
