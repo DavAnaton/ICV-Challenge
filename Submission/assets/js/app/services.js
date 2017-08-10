@@ -1,4 +1,5 @@
 angular.module("PathFinder")
+// Colors service: used to pass colors from form in sidebar to board
 .factory('Colors', function(){
     var colors = {A:'eeeeee', B:'333333', C:'22cc44'};
     return {
@@ -11,28 +12,45 @@ angular.module("PathFinder")
     }
 })
 
+// BFS service: in charge of the algorithmic part in our app
 .factory('BFS', function($rootScope){
     var board = [],
     	size = undefined,
     	start = undefined,
     	end = undefined,
+        diagonals = false,
         // Given after the run
     	results = {
     		path: [],
     		runtime: undefined,
     		steps: undefined
     	};
+
     // Gets the neighbors to a given tile
     var getNeighbors = function(index){
         var neighbors = [];
+
+        // First, transform index to coordinates
         var x = index % size;
         var y = Math.floor(index / size);
+
         var movements = [
             {x: 0, y: -1},
             {x: -1, y: 0},
             {x: 1, y: 0},
-            {x: 0, y: 1}
+            {x: 0, y: 1},
         ];
+
+        if(diagonals){
+            movements = movements.concat([
+                {x: -1, y: -1}, // Diagonal
+                {x: -1, y: 1}, // Diagonal
+                {x: 1, y: -1}, // Diagonal
+                {x: 1, y: 1} // Diagonal
+            ]);
+        }
+
+        // Generate all neighbors
         for(key in movements){
             var m = movements[key];
             if(x + m.x < size && x + m.x >= 0 
@@ -42,6 +60,7 @@ angular.module("PathFinder")
         }
         return neighbors;
     }
+
     // Filter neighbors to keep valid cells
     var filterNeighbors = function(neighbor){
         var notColorB = !board[neighbor].selected;
@@ -52,6 +71,7 @@ angular.module("PathFinder")
             return false;
         }            
     };
+
     // Starts from end and goes all the way to start
     var readPath = function(){
         // No path was found
@@ -66,6 +86,7 @@ angular.module("PathFinder")
         }
         return path;
     }
+
     // Clears the board if there was a previous run of BFS
     var clearVisited = function(){
         for(index in board){
@@ -73,6 +94,7 @@ angular.module("PathFinder")
             board[index].parent = undefined;
         }
     }
+
     return {
         run: function(){
             clearVisited();
@@ -119,22 +141,16 @@ angular.module("PathFinder")
     		start = points.start;
     		end = points.end;
     	},
+        // Allow or not diagonals in the path
+        setDiagonals: function(bool){
+            diagonals = bool;
+        },
+        // BFS is ready only if it has a starting and ending point
         isReady: function(){
             return start!=undefined && end!=undefined;
         },
     	getResults: function(){
     		return results;
     	}
-    }
-})
-.factory('Messages', function($rootScope){
-    var messages = [];
-    return{
-        addMessage: function(message){
-            messages.push(message);
-        },
-        closeMessage: function(index){
-            messages.splice(index, 1);
-        }
     }
 });

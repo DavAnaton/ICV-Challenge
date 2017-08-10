@@ -1,6 +1,7 @@
 *[ng-cloak]{
 	display: none;
 }
+/*Board*/
 #board{
 	background-color:red;
 	height: 33.333vh;
@@ -11,6 +12,7 @@
 	transform: translate(-50%, -50%);
 	border-collapse: collapse;
 }
+/*Tiles*/
 .tile{
 	height: calc(100% / 12);
 	width: calc(100% / 12);
@@ -34,6 +36,7 @@
 	bottom: 0;
 	right: 0;
 }
+/*Sidebar*/
 #sidebar{
 	position: fixed;
 	top: 0;
@@ -55,6 +58,18 @@
 #sidebar .button.active{
 	background-color: #77cbcb;
 }
+/*Form*/
+.formLine{
+	width: 100%;
+	padding: 3px;
+}
+.formLine label{
+	width: 10%;
+}
+.formLine input[type="text"]{
+	width: 80%;
+}
+/*Messages*/
 #messages{
 	position: absolute;
 	width: calc(100% - 150px);
@@ -89,7 +104,7 @@
 }
 
 
-/*********************************/
+/***********Results*page**********************/
 #resultsWrapper{
 	position: absolute;
 	top: 50vh;
@@ -97,6 +112,7 @@
 	transform: translate(-50%, -50%);
 	text-align: center;
 }
+/*Button*/
 #startOverButton{
 	background-color: #cccccc;
 	position: relative;
@@ -136,15 +152,4 @@
 }
 #startOverButton:hover #vsign{
 	background-color: red;
-}
-
-.formLine{
-	width: 100%;
-	padding: 3px;
-}
-.formLine label{
-	width: 10%;
-}
-.formLine input[type="text"]{
-	width: 80%;
 }

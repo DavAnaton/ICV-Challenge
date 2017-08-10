@@ -2,14 +2,17 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/materialize.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 	<title>ICV shortest path app</title>
 </head>
 <body ng-app="PathFinder">
+
+	<!-- Message wrapper: display informations -->
 	<div ng-controller="MessagesController" id="messages" ng-cloak>
 		<div class="message" ng-repeat="message in messages" ng-class="message.type">{{message.text}}<span class="close" ng-click="close(message)">X</span></div>
 	</div>
+
+	<!-- Sidebar: show additional functionnalities in advanced mode, in settings -->
 	<div id="sidebar" ng-controller="SidebarController">
 		<div class="button" ng-click="start()" ng-class="{active: clicked=='start'}">Start</div>
 		<div class="button" ng-click="end()" ng-class="{active: clicked=='end'}">End</div>
@@ -18,11 +21,19 @@
 		<div class="button" ng-click="reset()" ng-show="advanced" ng-cloak>Reset board</div>
 		<div class="button" ng-click="toggleSettings()" ng-class="{active: clicked=='settings'}">Settings</div>
 		<form ng-show="clicked=='settings'" ng-cloak>
-			<div class="formLine" ng-repeat="(key, value) in colors"><label for="color{{key}}">{{key}}:</label><input type="text" ng-model="colors[key]" id="color{{key}}"></div>
+			<div class="formLine" ng-repeat="(key, value) in colors">
+				<label for="color{{key}}">{{key}}:</label>
+				<input type="text" ng-model="colors[key]" id="color{{key}}">
+			</div>
 			<div class="button" ng-click="advancedMode()">Advanced Mode</div>
+			<div class="formLine" ng-click="toggleDiagonals()" ng-show="advanced">
+				<input type="checkbox" ng-model="diagonals" id="diag">
+				<label for="diag">Allow diagonals</label>
+			</div>
 		</form>
 	</div>
 
+	<!-- Board -->
 	<div id="board" ng-controller="BoardController" ng-cloak>
 		<div ng-repeat="i in size * size | range" 
 			class="tile" ng-class="{start:($index==points.start), end:($index==points.end)}"
@@ -32,7 +43,6 @@
 	</div>
 
 
-	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
 	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
 	<script type="text/javascript" src="./assets/js/app/app.js"></script>
 	<script type="text/javascript" src="./assets/js/app/filters.js"></script>

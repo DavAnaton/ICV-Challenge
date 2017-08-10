@@ -2,29 +2,35 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/materialize.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 	<title>ICV shortest path app</title>
 </head>
 <body ng-app="PathFinder">
 
 	<div ng-controller="ResultsController" id="resultsWrapper">
+
 		Job ended successfully with
+
+		<!-- Steps -->
 		<ng-pluralize count="steps" when="{
 				'0': 'no step', 
 				'one': '1 step', 
 				'other': '{} steps'
 		}"></ng-pluralize>,
+
+		<!-- Time -->
 		and in {{time}} ms.<br/>
+
+		<!-- Button -->
 		<div id="startOverButton">
 			<a href="index.html">
 				<span id="vsign"><img src="./assets/img/VSign.png"></span>
 				<span id="startOver">Start Over</span>
 			</a>
 		</div>
+
 	</div>
 
-	<!-- <script type="text/javascript" src="./assets/js/materialize.min.js"></script> -->
 	<script type="text/javascript" src="./assets/js/angular.min.js"></script>
 	<script type="text/javascript" src="./assets/js/app/app.js"></script>
 	<script type="text/javascript" src="./assets/js/app/controllers/resultsControllers.js"></script>

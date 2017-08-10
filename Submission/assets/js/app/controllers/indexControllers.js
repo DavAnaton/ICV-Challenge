@@ -8,9 +8,8 @@ angular.module("PathFinder")
     BFS.setSize($scope.size);
     $scope.points = {start: null, end: null}; // Start and end points
 
-    /*
-        Sets all the tiles to their default state
-    */
+    
+    // Sets all the tiles to their default state
     $scope.resetBoard = function(){
         $scope.tiles = []; // Array of tiles
         for (i = 0; i < $scope.size*$scope.size; i++) {
@@ -23,7 +22,7 @@ angular.module("PathFinder")
     }
     $scope.resetBoard();
 
-    // Changes the behaviour of a click on a tile
+    // Changes the behaviour of a click on a tile, happens when the sidebar needs to change it
     $rootScope.$on('changeClick', function(e, newValue){
         if(!newValue){ // if null
             newValue = 'default';
@@ -51,29 +50,39 @@ angular.module("PathFinder")
             $scope.tiles[index].selected = false;
             $rootScope.$emit('changeClick', 'default');
         }, 
+        // When the settings are open, we close them before changing the color
+        settings: function(index){
+            $rootScope.$emit('changeClick', 'default');
+            $scope.tileClicked(index)
+        },
+        // Blocks clicks
         none: ()=>{}
     }
     // Sets the default function to changing the color
     $scope.tileClicked = tileFunctions.default;
 
 
-    // Sets a test board to make testing easier
+    // Sets a test board to make testing easier after click in sidebar
     $rootScope.$on('fillTest', function(){
         $scope.resetBoard()
         $scope.points.start = 0;
         $scope.points.end = $scope.size-1;
         BFS.setPoints($scope.points);
-        var selected = [1, 5, 10, 13, 15, 16, 17, 19, 20, 22, 27, 31, 34, 37, 38, 39, 41, 43, 45, 46, 49, 53, 55, 58, 61, 62, 63, 64, 65, 67, 68, 70, 79, 82, 85, 86, 87, 88, 89, 90, 91, 93, 94, 97, 101, 109, 111, 113, 115, 117, 119, 121, 123, 125, 126, 127, 128, 129, 131, 135, 137];
+
+        // Example of map where color B needs to be applied
+        var selected = [1, 5, 10, 13, 15, 16, 17, 19, 20, 22, 24, 27, 31, 34, 37, 38, 39, 41, 43, 45, 46, 49, 53, 55, 58, 61, 62, 63, 64, 65, 67, 68, 70, 79, 82, 85, 86, 87, 88, 89, 90, 91, 93, 94, 97, 101, 109, 111, 113, 115, 117, 119, 121, 123, 125, 126, 127, 128, 129, 131, 135, 137];
         selected.map(function(item){
             $scope.tiles[item].selected = true;
         });
     });
-    // Reset board
+
+    // Reset board was clicked
     $rootScope.$on('resetBoard', function(){
         $scope.resetBoard();
     });
 
     $scope.path = [];
+    // Displays the path with an animation and waits for 1 second before redirecting
     var setPath = function(path){
         var i = 0;
         var interval = $interval(function(){
@@ -90,12 +99,14 @@ angular.module("PathFinder")
             }
         }, 100)
     }
+    // When the BFS finishes
     $rootScope.$on('ResultsUpdated', function(e, results){
         setPath(results.path);
         $scope.steps = results.steps;
         $scope.runtime = results.runtime;
     })
 
+    // Gives the color from the Color service according to the state of the tile
     $scope.getColorFor = function(index){
         var color = "#";
         if($scope.path.indexOf(index)!=-1){
@@ -115,7 +126,9 @@ angular.module("PathFinder")
     $scope.clicked = null;
     $scope.colors = Colors.getColors();
     $scope.advanced = false;
+    $scope.diagonals = false;
 
+    // Changes the active item in the sidebar
     $rootScope.$on('changeClick', function(e, value){
         $scope.clicked = value;
     })
@@ -131,14 +144,16 @@ angular.module("PathFinder")
     // Fill Board button is pressed: Test board is loaded
     $scope.test = function(){
         $scope.clicked = null;
-    $rootScope.$emit('newMessage', {text:'Test values loaded', type: 'info'});
+        $rootScope.$emit('newMessage', {text:'Test values loaded', type: 'info'});
         $rootScope.$emit('fillTest');
+        $rootScope.$emit('changeClick', null);
     }
     // Reset Board button is pressed: Board is reset
     $scope.reset = function(){
         $scope.clicked = null;
         $rootScope.$emit('newMessage', {text:'Default values loaded', type: 'info'});
         $rootScope.$emit('resetBoard');
+        $rootScope.$emit('changeClick', null);
     }
     // Hides / Shows the settings
     $scope.toggleSettings = function(){
@@ -148,8 +163,15 @@ angular.module("PathFinder")
     $scope.advancedMode = function(){
         $scope.advanced = !$scope.advanced;
     }
+    // Allow or not diagonals in the path
+    $scope.toggleDiagonals = function(){
+        $scope.diagonals = !$scope.diagonals;
+        BFS.setDiagonals($scope.diagonals);
+    }
+
     // Go button is pressed: BFS is running
     $scope.go = function(){
+        // TODO: this logic should be moved to BFS.run
         if(BFS.isReady()){
             $rootScope.$emit('newMessage', {text:'BFS running', type: 'success'});
             $scope.clicked = 'go';
@@ -163,12 +185,16 @@ angular.module("PathFinder")
 .controller('MessagesController', function($scope, $rootScope, $timeout){
     $scope.messages = [];
     var timeouts = [];
+
+    // When a message arrives, we add it and plan its disparition 3s later 
     $rootScope.$on('newMessage', function(e, message){
         var index = $scope.messages.push(message) - 1;
         timeouts.push($timeout(function(){
             $scope.close(message)
-        }, 2000))
+        }, 3000))
     })
+
+    // When we close it with the button
     $scope.close = function(message){
         var index = $scope.messages.indexOf(message);
         $scope.messages.splice(index, 1);
