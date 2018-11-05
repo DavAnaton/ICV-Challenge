@@ -3,7 +3,6 @@
 }
 /*Board*/
 #board{
-	background-color:red;
 	height: 33.333vh;
 	width: 33.333vh;
 	position: absolute;
@@ -14,8 +13,8 @@
 }
 /*Tiles*/
 .tile{
-	height: calc(100% / 12);
-	width: calc(100% / 12);
+	height: 8.33333333% /*(100 / 12)*/;
+	width: 8.33333333% /*(100 / 12)*/;
 	position: relative;
 	display: inline-block;
 	margin: 0;
